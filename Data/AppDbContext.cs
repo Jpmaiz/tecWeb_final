@@ -12,14 +12,15 @@ namespace final.Data
 
         public DbSet<Celda> Celdas => Set<Celda>();
         public DbSet<Expediente> Expedientes => Set<Expediente>();
-   
+    
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            
-           
+            modelBuilder.Entity<Celda>();
+            modelBuilder.Entity<Expediente>();
+          
         }
     }
 }
