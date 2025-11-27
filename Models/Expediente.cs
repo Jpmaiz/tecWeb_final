@@ -8,7 +8,7 @@
         public DateTime FechaRegistro { get; set; }
 
         // Relación 1:1 con Recluso
-        public Guid ReclusoId { get; set; }
-        public Recluso Recluso { get; set; }
+        //public Guid ReclusoId { get; set; }
+        //public Recluso Recluso { get; set; }
     }
 }
