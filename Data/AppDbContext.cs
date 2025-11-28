@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using final.Models.Entities;
-using final.Models;
+
 
 namespace final.Data
 {
