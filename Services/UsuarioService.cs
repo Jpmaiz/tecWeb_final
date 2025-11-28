@@ -30,7 +30,8 @@ namespace final.Services
                 Nombre = dto.Nombre,
                 CI = dto.CI,
                 Correo = dto.Correo,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Rol = dto.Rol   // 👈 GUARDAMOS EL ROL (Admin / User)
             };
 
             await _repo.Add(usuario);
@@ -40,7 +41,9 @@ namespace final.Services
                 Id = usuario.Id,
                 Nombre = usuario.Nombre,
                 CI = usuario.CI,
-                Correo = usuario.Correo
+                Correo = usuario.Correo,
+                // Si tu UsuarioDto tiene Rol, puedes devolverlo también:
+                // Rol = usuario.Rol
             };
         }
 
@@ -61,7 +64,8 @@ namespace final.Services
             {
                 new Claim("id", u.Id.ToString()),
                 new Claim("correo", u.Correo),
-                new Claim(ClaimTypes.Name, u.Nombre)
+                new Claim(ClaimTypes.Name, u.Nombre),
+                new Claim(ClaimTypes.Role, u.Rol) // 👈 AQUÍ VA EL ROL EN EL TOKEN
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));

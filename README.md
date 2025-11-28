@@ -1,127 +1,325 @@
-TecWeb Final — Sistema de Gestión de Guardia y Usuarios
-Instalación y configuración
+# 🏛️ Sistema de Gestión Penitenciaria — API REST
 
-Instalar paquetes de EF Core:
+## 📌 1. Presentación del Proyecto
 
-dotnet add package Microsoft.EntityFrameworkCore.Sqlite
-dotnet add package Microsoft.EntityFrameworkCore.Tools
+Este proyecto consiste en el desarrollo de una **API REST en ASP.NET Core (.NET 8)** para la gestión administrativa de un centro penitenciario, permitiendo el control digital y centralizado de:
 
+- Reclusos  
+- Guardias  
+- Celdas  
+- Expedientes  
+- Usuarios del sistema  
 
-Crear la migración inicial y actualizar la base de datos:
+El sistema resuelve el problema de la desorganización de datos en entornos penitenciarios, donde tradicionalmente la información se encuentra dispersa o gestionada de forma manual, generando inconsistencias y pérdida de información.
 
-dotnet ef migrations add InitSqlite
-dotnet ef database update
+La API proporciona una solución:
 
-Objetivo
+✅ Segura (JWT)  
+✅ Escalable  
+✅ Basada en arquitectura por capas  
+✅ Preparada para despliegue en entornos reales (Docker + Railway)  
 
-Implementar un mini-sistema de gestión de guardias y usuarios, demostrando dominio de relaciones 1:N, N:M y 1:1 en EF Core, y aplicando arquitectura por capas (Controller → Service → Repository → DbContext).
+Cumple con los requerimientos de la materia Tecnología Web: arquitectura por capas, Entity Framework Core, relaciones entre entidades, autenticación JWT, documentación Swagger y despliegue.
 
-Contexto del dominio
+---
 
-Usuario: puede tener uno o varios Roles (N:M).
+## 🏗️ 2. Estructura del Proyecto
 
-Guardia: cada guardia pertenece a un Usuario y puede estar asignado a diferentes turnos o sectores (1:N).
+La estructura sigue un diseño estándar profesional para APIs en ASP.NET Core:
 
-Sector: puede tener varios guardias asignados (1:N).
+/Controllers
+/Data
+/Models
+/Entities
+/DTOs
+/Repositories
+/Services
+/Migrations
 
-Perfil: opcional 1:1 con Usuario (PK compartida).
+Program.cs
+appsettings.json
 
-Relaciones en AppDbContext
+yaml
+Copiar código
 
-Usuario → Guardia: 1:N, FK requerida, eliminación en cascada.
+### 📂 Descripción de Carpetas
 
-Usuario ↔ Roles: N:M con tabla de unión UsuarioRol.
+| Carpeta | Descripción |
+|--------|-------------|
+Controllers | Manejo de las solicitudes HTTP.
+Data | Contiene el `AppDbContext` y configuración de la base de datos.
+Models/Entities | Representaciones de tablas en la base de datos.
+Models/DTOs | Modelos usados para transferencia de datos.
+Repositories | Acceso a datos usando Entity Framework Core.
+Services | Lógica de negocio del sistema.
+Migrations | Historial de cambios en la base de datos.
+Program.cs | Configuración principal de la aplicación.
+appsettings.json | Configuración de conexión, JWT y variables.
 
-Sector → Guardia: 1:N, FK requerida.
+---
 
-Usuario ↔ Perfil: 1:1, PK compartida, opcional en Usuario.
+## 🧩 3. Arquitectura por Capas
 
-Bonus: Validación de solapamiento de turnos en un sector al asignar guardias.
+El proyecto utiliza una **Arquitectura por Capas** junto al patrón **Repository + Service**:
 
-Capas de la aplicación
+### 🎯 Controllers
+Encargados de recibir solicitudes HTTP, validar datos y retornar respuestas.
 
-Controllers: delgados, llaman a Services.
+Ejemplo:
+AuthController
+GuardiasController
+ReclusoController
+CeldaController
+ExpedienteController
+UsuarioController
 
-Services: lógica de negocio y mapeos DTO.
+yaml
+Copiar código
 
-Repositories: encapsulan acceso a datos.
+---
 
-DbContext: configuración de relaciones y migraciones.
+### ⚙️ Services
+Contienen la lógica de negocio.
 
-Endpoints principales
-Usuarios
+Ejemplo:
+GuardiaService
+ReclusoService
+UsuarioService
+CeldaService
+ExpedienteService
 
-POST /api/v1/usuarios → crear usuario.
+yaml
+Copiar código
 
-GET /api/v1/usuarios/{id}/roles → obtener roles del usuario.
+Funciones:
+- Validaciones
+- Procesamiento de datos
+- Generación de tokens JWT
+- Lógica del sistema
 
-POST /api/v1/usuarios/{id}/perfil → crear perfil 1:1 opcional.
+---
 
-GET /api/v1/usuarios/{id}/perfil → ver perfil del usuario.
+### 📦 Repositories
+Encargados del acceso directo a la base de datos mediante Entity Framework Core.
 
-Roles
+Ejemplo:
+IGuardiaRepository / GuardiaRepository
+IUsuarioRepository / UsuarioRepository
+IReclusoRepository / ReclusoRepository
 
-POST /api/v1/roles → crear rol.
+yaml
+Copiar código
 
-POST /api/v1/usuarios/{id}/roles → asignar roles a usuario.
+---
 
-Guardias
+### 🗄️ Data / AppDbContext
 
-POST /api/v1/guardias → crear guardia asignado a usuario y sector.
+El `AppDbContext` administra:
 
-GET /api/v1/guardias/{id} → ver información del guardia.
+- Las entidades del sistema
+- Sus relaciones
+- La conexión con PostgreSQL
 
-GET /api/v1/sectores/{id}/guardias → listar guardias por sector.
+Se utiliza enfoque **Code First** con migraciones.
 
-Ejemplo de uso
-Crear usuario
-POST /api/v1/usuarios
+---
+
+## 🧬 4. Entidades del Sistema
+
+### 👤 Usuario
+Representa a los usuarios que acceden al sistema.
+
+Campos:
+- Id  
+- Nombre  
+- Correo  
+- PasswordHash  
+- Rol  
+
+---
+
+### 👮 Guardia
+Representa al personal penitenciario.
+
+Campos:
+- Id  
+- Nombre  
+- CI  
+- Turno  
+- Rango  
+
+---
+
+### 🏢 Celda
+Representa las celdas donde se encuentran los reclusos.
+
+Campos:
+- Id  
+- Numero  
+- Pabellon  
+- Capacidad  
+
+---
+
+### 🚷 Recluso
+Representa a los privados de libertad.
+
+Campos:
+- Id  
+- Nombre  
+- CI  
+- FechaIngreso  
+- CondenaAnios  
+
+---
+
+### 📁 Expediente
+Representa el historial legal del recluso.
+
+Campos:
+- Id  
+- Codigo  
+- DelitoPrincipal  
+- FechaRegistro  
+
+---
+
+## 🔐 5. Autenticación, Autorización y JWT
+
+La API implementa un sistema de **autenticación y autorización basado en JSON Web Tokens (JWT)**, garantizando que solo los usuarios autenticados puedan acceder a rutas protegidas.
+
+Se utiliza el atributo `[Authorize]` de ASP.NET Core.
+
+---
+
+## 🧩 Endpoints de Autenticación
+
+### 📌 Registro de usuario
+POST /auth/register
+
+css
+Copiar código
+
+Body de ejemplo:
+```json
 {
-  "nombre": "Juan Pérez",
-  "email": "juan@example.com"
+  "nombre": "Juan Pablo",
+  "ci": "1234567",
+  "correo": "juan@test.com",
+  "password": "123456"
 }
+📌 Login
+bash
+Copiar código
+POST /auth/login
+Body de ejemplo:
 
-Crear rol
-POST /api/v1/roles
+json
+Copiar código
 {
-  "nombre": "Administrador"
+  "correo": "juan@test.com",
+  "password": "123456"
 }
+Respuesta:
 
-Asignar rol a usuario
-POST /api/v1/usuarios/1/roles
+json
+Copiar código
 {
-  "roleId": 1
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
+🔐 Funcionamiento del JWT
+El token JWT contiene:
 
-Crear perfil opcional
-POST /api/v1/usuarios/1/perfil
+Id del usuario
+
+Correo
+
+Nombre
+
+Rol (Admin / User)
+
+Configuración en appsettings.json:
+
+json
+Copiar código
+"Jwt": {
+  "Key": "CLAVE_SUPER_SECRETA",
+  "Issuer": "PrisonApi",
+  "Audience": "PrisonClient"
+}
+🔒 Protección de rutas
+Las rutas protegidas utilizan:
+
+csharp
+Copiar código
+[Authorize]
+Ejemplo real:
+
+csharp
+Copiar código
+[ApiController]
+[Route("api/recluso")]
+[Authorize]
+public class ReclusoController : ControllerBase
 {
-  "documentId": "12345678",
-  "birthDate": "1998-05-21"
+    // Todas las rutas requieren JWT
 }
+✅ Autorización por Roles
+Se utilizan los roles:
 
-Crear guardia
-POST /api/v1/guardias
-{
-  "usuarioId": 1,
-  "sectorId": 2,
-  "turnoInicio": "2025-11-28T08:00:00",
-  "turnoFin": "2025-11-28T16:00:00"
-}
+Admin
 
-Listar guardias de un sector
-GET /api/v1/sectores/2/guardias
+User
 
-Bonus — Validación de solapamiento de turnos
-POST /api/v1/guardias
-{
-  "usuarioId": 2,
-  "sectorId": 2,
-  "turnoInicio": "2025-11-28T12:00:00",
-  "turnoFin": "2025-11-28T20:00:00"
-}
+Incluidos en el JWT mediante:
 
+csharp
+Copiar código
+new Claim(ClaimTypes.Role, u.Rol);
+Puede restringirse acceso por rol:
 
-Respuesta esperada si hay solapamiento:
+csharp
+Copiar código
+[Authorize(Roles = "Admin")]
+🔑 Uso del Token en Swagger
+Ejecutar:
 
-{ "error": "El sector ya tiene un guardia en este rango horario." }
+bash
+Copiar código
+POST /auth/login
+Copiar el token generado.
+
+En Swagger, hacer clic en 🔒 Authorize.
+
+Pegar:
+
+nginx
+Copiar código
+Bearer TU_TOKEN_AQUI
+Ahora podrás probar todas las rutas protegidas.
+
+🔑 Uso del Token en Postman
+En Postman agregar:
+
+makefile
+Copiar código
+Authorization: Bearer TU_TOKEN_AQUI
+En la pestaña Authorization usando tipo: Bearer Token.
+
+✅ Esta implementación cumple con:
+Autenticación JWT
+
+Autorización por roles
+
+Protección con [Authorize]
+
+Arquitectura por capas
+
+Uso de EF Core
+
+Buenas prácticas profesionales
+
+yaml
+Copiar código
+
+---
