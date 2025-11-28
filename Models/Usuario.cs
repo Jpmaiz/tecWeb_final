@@ -19,5 +19,8 @@ namespace final.Models.Entities
 
         [Required]
         public string PasswordHash { get; set; } = null!;
+
+        [Required]
+        public string Rol { get; set; } = "User";
     }
 }

@@ -9,6 +9,8 @@ namespace final.Models.DTOs
         [Required] public string CI { get; set; } = null!;
         [Required][EmailAddress] public string Correo { get; set; } = null!;
         [Required] public string Password { get; set; } = null!;
+
+        public string Rol { get; set; } = "User"; 
     }
 
     public class LoginUsuarioDto
