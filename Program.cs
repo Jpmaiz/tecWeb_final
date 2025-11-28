@@ -5,17 +5,17 @@ using final.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql; // 👈 IMPORTANTE
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ============================================
-// 1. Cargar variables de entorno (.env) SOLO EN LOCAL
+// 1. Cargar .env SOLO en desarrollo
 // ============================================
 try
 {
     if (builder.Environment.IsDevelopment())
     {
-        // Requiere el paquete DotNetEnv
         DotNetEnv.Env.Load();
         Console.WriteLine("Archivo .env cargado (Development).");
     }
@@ -26,52 +26,66 @@ catch
 }
 
 // ============================================
-// 2. CONFIGURACIÓN DE BASE DE DATOS (PostgreSQL)
+// 2. CONFIGURACIÓN DE BASE DE DATOS
+//    - Railway: usa DATABASE_URL
+//    - Local: usa appsettings o valores por defecto
 // ============================================
 
-// Variables de entorno para Postgres (local o Railway)
-var pgUser = Environment.GetEnvironmentVariable("POSTGRES_USER") ?? "postgres";
-var pgPassword = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD") ?? "postgres";
-var pgHost = Environment.GetEnvironmentVariable("POSTGRES_HOST") ?? "localhost";
-var pgDb = Environment.GetEnvironmentVariable("POSTGRES_DB") ?? "carcel_db";
-var pgPort = Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432";
+string connectionString;
 
-//// Connection string construida desde env vars
-//var connectionString =
-//    $"Host={pgHost};Port={pgPort};Database={pgDb};Username={pgUser};Password={pgPassword}";
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-// 🔧 MODO MIGRACIÓN DIRECTO A RAILWAY (TEMPORAL)
-var connectionString =
-    "Host=tramway.proxy.rlwy.net;Port=37462;Database=railway;Username=postgres;Password=qhLBgUktqbazjvpYTSQhhVlsczwoESra;Ssl Mode=Require;Trust Server Certificate=true";
-
-
-// Si NO estamos apuntando a localhost, asumimos que es Railway u otro server y usamos SSL
-if (!string.Equals(pgHost, "localhost", StringComparison.OrdinalIgnoreCase) &&
-    !string.Equals(pgHost, "127.0.0.1", StringComparison.OrdinalIgnoreCase))
+if (!string.IsNullOrWhiteSpace(databaseUrl))
 {
-    connectionString += ";Ssl Mode=Require;Trust Server Certificate=true";
-    Console.WriteLine("Usando SSL para PostgreSQL (no es localhost).");
-}
+    // MODO RAILWAY - DATABASE_URL = postgresql://user:pass@host:port/db
+    Console.WriteLine($"DATABASE_URL detectada: {databaseUrl}");
 
-Console.WriteLine($"Usando cadena de conexión: Host={pgHost};Port={pgPort};Database={pgDb};Username={pgUser};Password=******");
+    var uri = new Uri(databaseUrl);
+    var userInfo = uri.UserInfo.Split(':');
+
+    var npgsqlBuilder = new NpgsqlConnectionStringBuilder
+    {
+        Host = uri.Host,
+        Port = uri.Port,
+        Database = uri.LocalPath.TrimStart('/'),
+        Username = userInfo[0],
+        Password = userInfo.Length > 1 ? userInfo[1] : "",
+        SslMode = SslMode.Require,
+        TrustServerCertificate = true
+    };
+
+    connectionString = npgsqlBuilder.ToString();
+
+    Console.WriteLine($"Usando conexión Railway: Host={npgsqlBuilder.Host};Port={npgsqlBuilder.Port};Database={npgsqlBuilder.Database};Username={npgsqlBuilder.Username};Password=******");
+}
+else
+{
+    // MODO LOCAL
+    Console.WriteLine("DATABASE_URL no encontrada. Usando conexión local.");
+
+    connectionString =
+        builder.Configuration.GetConnectionString("DefaultConnection")
+        ?? "Host=localhost;Port=5432;Database=carcel_db;Username=postgres;Password=postgres";
+
+    Console.WriteLine("Usando conexión local: " + connectionString);
+}
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 // ============================================
-// 3. CONFIGURACIÓN DE JWT (Autenticación)
+// 3. CONFIGURACIÓN DE JWT
 // ============================================
 
-// Primero intentamos leer desde env vars (Railway / .env)
 var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
              ?? builder.Configuration["Jwt:Key"]
              ?? throw new InvalidOperationException("JWT_KEY no configurado.");
 
 var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER")
-                ?? builder.Configuration["Jwt:Issuer"];   // puede ser null
+                ?? builder.Configuration["Jwt:Issuer"];
 
 var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE")
-                  ?? builder.Configuration["Jwt:Audience"]; // puede ser null
+                  ?? builder.Configuration["Jwt:Audience"];
 
 var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
 
@@ -79,7 +93,7 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.RequireHttpsMetadata = false; // Railway termina HTTPS, en local puede ser http
+        options.RequireHttpsMetadata = false;
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -96,7 +110,7 @@ builder.Services
 builder.Services.AddAuthorization();
 
 // ============================================
-// 4. INYECCIÓN DE DEPENDENCIAS (Services/Repositories)
+// 4. INYECCIÓN DE DEPENDENCIAS
 // ============================================
 
 // Repositories
@@ -151,7 +165,6 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    // Swagger también disponible en producción (Railway)
     app.UseSwagger();
     app.UseSwaggerUI();
 }
