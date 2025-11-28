@@ -289,14 +289,14 @@ Authorization: Bearer TU_TOKEN_AQUI
 ## 🔐 Autenticación JWT
 
 ### Configuración
-```json
+json
 "Jwt": {
   "Key": "clave-secreta-super-segura",
   "Issuer": "PrisonAPI",
   "Audience": "PrisonClient"
 }
 
-# 🚀 Deploy en Railway
+## 🚀 Deploy en Railway
 Sistema de Gestión Penitenciaria – API REST
 
 ## 📌 1. Descripción del Deploy
