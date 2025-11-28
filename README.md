@@ -352,7 +352,7 @@ JWT_KEY es tu clave secreta utilizada para firmar los tokens JWT.
 
 ASPNETCORE_ENVIRONMENT se configura en Production.
 
-🧠 5. Lógica de Conexión en Program.cs
+## 🧠 5. Lógica de Conexión en Program.cs
 El proyecto detecta automáticamente si está en Railway o en local:
 
 ✅ Si existe DATABASE_URL → Se conecta a Railway ✅ Si no existe → Se conecta a PostgreSQL local
@@ -365,7 +365,7 @@ SslMode = Require
 TrustServerCertificate = true
 Esto asegura una conexión segura en producción.
 
-🗃 6. Migraciones Automáticas
+## 🗃 6. Migraciones Automáticas
 La API ejecuta automáticamente las migraciones al iniciarse:
 
 C#
@@ -381,7 +381,7 @@ DATABASE_URL detectada...
 Aplicando migraciones de base de datos...
 Migraciones aplicadas correctamente.
 Now listening on: [http://0.0.0.0:8080](http://0.0.0.0:8080)
-✅ 7. Verificación del Deploy
+## ✅ 7. Verificación del Deploy
 Para comprobar que todo funciona:
 
 Abrir Swagger: https://tecwebfinal-production.up.railway.app/swagger
@@ -403,8 +403,8 @@ GET /api/celda
 GET /api/expediente
 
 Si todos responden: ✅ el deploy es exitoso.
-
-🔄 8. Flujo del Deploy
+--
+## 🔄 8. Flujo del Deploy
 Subir el proyecto a GitHub.
 
 Crear proyecto en Railway.
