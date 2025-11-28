@@ -1,4 +1,4 @@
-"""# 🏛️ Sistema de Gestión Penitenciaria - API REST
+# 🏛️ Sistema de Gestión Penitenciaria - API REST
 
 ## 📌 1. Presentación del Proyecto
 
@@ -289,14 +289,14 @@ Authorization: Bearer TU_TOKEN_AQUI
 ## 🔐 Autenticación JWT
 
 ### Configuración
-```json
+json
 "Jwt": {
   "Key": "clave-secreta-super-segura",
   "Issuer": "PrisonAPI",
   "Audience": "PrisonClient"
 }
 
-# 🚀 Deploy en Railway
+## 🚀 Deploy en Railway
 Sistema de Gestión Penitenciaria – API REST
 
 ## 📌 1. Descripción del Deploy
@@ -339,7 +339,7 @@ Ambos servicios están conectados mediante variables de entorno.
 
 En Railway se configuraron las siguientes variables:
 
-```env
+env
 DATABASE_URL=postgresql://usuario:password@postgres.railway.internal:5432/railway
 JWT_KEY=TuClaveSecretaJWT
 ASPNETCORE_ENVIRONMENT=Production
@@ -351,8 +351,8 @@ DATABASE_URL la genera Railway automáticamente.
 JWT_KEY es tu clave secreta utilizada para firmar los tokens JWT.
 
 ASPNETCORE_ENVIRONMENT se configura en Production.
-
-🧠 5. Lógica de Conexión en Program.cs
+---
+## 🧠 5. Lógica de Conexión en Program.cs
 El proyecto detecta automáticamente si está en Railway o en local:
 
 ✅ Si existe DATABASE_URL → Se conecta a Railway ✅ Si no existe → Se conecta a PostgreSQL local
@@ -364,8 +364,8 @@ C#
 SslMode = Require
 TrustServerCertificate = true
 Esto asegura una conexión segura en producción.
-
-🗃 6. Migraciones Automáticas
+---
+## 🗃 6. Migraciones Automáticas
 La API ejecuta automáticamente las migraciones al iniciarse:
 
 C#
@@ -381,7 +381,7 @@ DATABASE_URL detectada...
 Aplicando migraciones de base de datos...
 Migraciones aplicadas correctamente.
 Now listening on: [http://0.0.0.0:8080](http://0.0.0.0:8080)
-✅ 7. Verificación del Deploy
+## ✅ 7. Verificación del Deploy
 Para comprobar que todo funciona:
 
 Abrir Swagger: https://tecwebfinal-production.up.railway.app/swagger
@@ -403,8 +403,8 @@ GET /api/celda
 GET /api/expediente
 
 Si todos responden: ✅ el deploy es exitoso.
-
-🔄 8. Flujo del Deploy
+---
+## 🔄 8. Flujo del Deploy
 Subir el proyecto a GitHub.
 
 Crear proyecto en Railway.
