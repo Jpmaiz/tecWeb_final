@@ -9,9 +9,8 @@ using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ============================================
-// 1. Cargar .env SOLO en desarrollo
-// ============================================
+
+
 try
 {
     if (builder.Environment.IsDevelopment())
@@ -25,11 +24,7 @@ catch
     Console.WriteLine(".env no encontrado o DotNetEnv no instalado. Continuando sin .env.");
 }
 
-// ============================================
-// 2. CONFIGURACIÓN DE BASE DE DATOS
-//    - Railway: usa DATABASE_URL
-//    - Local: usa appsettings o valores por defecto
-// ============================================
+
 
 string connectionString;
 
@@ -37,7 +32,7 @@ var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
 if (!string.IsNullOrWhiteSpace(databaseUrl))
 {
-    // MODO RAILWAY - DATABASE_URL = postgresql://user:pass@host:port/db
+
     Console.WriteLine($"DATABASE_URL detectada: {databaseUrl}");
 
     var uri = new Uri(databaseUrl);
@@ -75,9 +70,7 @@ else
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// ============================================
-// 3. CONFIGURACIÓN DE JWT
-// ============================================
+
 
 var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
              ?? builder.Configuration["Jwt:Key"]
@@ -111,9 +104,7 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
-// ============================================
-// 4. INYECCIÓN DE DEPENDENCIAS
-// ============================================
+
 
 // Repositories
 builder.Services.AddScoped<IGuardiaRepository, GuardiaRepository>();
@@ -129,18 +120,14 @@ builder.Services.AddScoped<ICeldaService, CeldaService>();
 builder.Services.AddScoped<IExpedienteService, ExpedienteService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
-// ============================================
-// 5. CONTROLLERS + SWAGGER
-// ============================================
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ============================================
-// 6. APLICAR MIGRACIONES AUTOMÁTICAMENTE
-// ============================================
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -156,9 +143,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// ============================================
-// 7. PIPELINE HTTP
-// ============================================
+
 
 if (app.Environment.IsDevelopment())
 {
