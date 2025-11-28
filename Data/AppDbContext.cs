@@ -1,7 +1,6 @@
-﻿using final.Models;
-using System.Collections.Generic;
-using System.Reflection.Emit;
+using final.Models;
 using Microsoft.EntityFrameworkCore;
+
 namespace final.Data
 {
     public class AppDbContext : DbContext
@@ -12,7 +11,9 @@ namespace final.Data
 
         public DbSet<Celda> Celdas => Set<Celda>();
         public DbSet<Expediente> Expedientes => Set<Expediente>();
-    
+        public DbSet<Guardia> Guardias => Set<Guardia>();
+        public DbSet<Usuario> Usuarios => Set<Usuario>();
+        public DbSet<Recluso> Reclusos => Set<Recluso>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,7 +21,9 @@ namespace final.Data
 
             modelBuilder.Entity<Celda>();
             modelBuilder.Entity<Expediente>();
-          
+            modelBuilder.Entity<Guardia>();
+            modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Recluso>();
         }
     }
 }
