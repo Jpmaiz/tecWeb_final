@@ -295,3 +295,130 @@ Authorization: Bearer TU_TOKEN_AQUI
   "Issuer": "PrisonAPI",
   "Audience": "PrisonClient"
 }
+
+# 🚀 Deploy en Railway
+Sistema de Gestión Penitenciaria – API REST
+
+## 📌 1. Descripción del Deploy
+
+Este proyecto fue desplegado en la plataforma **Railway** utilizando contenedores para ejecutar la API desarrollada en **ASP.NET Core** junto a una base de datos **PostgreSQL**.
+
+La aplicación está disponible públicamente y se conecta a PostgreSQL mediante variables de entorno, siguiendo buenas prácticas para entornos de producción.
+
+---
+
+## 🌐 2. URL del Proyecto en Producción
+
+**API Base:**
+https://tecwebfinal-production.up.railway.app
+
+**Swagger (Documentación):**
+https://tecwebfinal-production.up.railway.app/swagger
+
+Desde Swagger se pueden probar todos los endpoints del proyecto.
+
+---
+
+## 🛠 3. Servicios utilizados en Railway
+
+En Railway se configuraron dos servicios:
+
+### 📦 Servicio Backend
+- Nombre: `tecWeb_final`
+- Contiene la API ASP.NET Core.
+
+### 🗄 Servicio Base de Datos
+- Motor: PostgreSQL
+- Proporcionado por Railway.
+
+Ambos servicios están conectados mediante variables de entorno.
+
+---
+
+## 🔐 4. Variables de Entorno Configuradas
+
+En Railway se configuraron las siguientes variables:
+
+```env
+DATABASE_URL=postgresql://usuario:password@postgres.railway.internal:5432/railway
+JWT_KEY=TuClaveSecretaJWT
+ASPNETCORE_ENVIRONMENT=Production
+
+Importante:
+
+DATABASE_URL la genera Railway automáticamente.
+
+JWT_KEY es tu clave secreta utilizada para firmar los tokens JWT.
+
+ASPNETCORE_ENVIRONMENT se configura en Production.
+
+🧠 5. Lógica de Conexión en Program.cs
+El proyecto detecta automáticamente si está en Railway o en local:
+
+✅ Si existe DATABASE_URL → Se conecta a Railway ✅ Si no existe → Se conecta a PostgreSQL local
+
+Se convierte la URL a formato NpgsqlConnectionString y se fuerza:
+
+C#
+
+SslMode = Require
+TrustServerCertificate = true
+Esto asegura una conexión segura en producción.
+
+🗃 6. Migraciones Automáticas
+La API ejecuta automáticamente las migraciones al iniciarse:
+
+C#
+
+db.Database.Migrate();
+Esto permite que las tablas se creen automáticamente cuando la aplicación se inicia por primera vez en Railway.
+
+En los logs se puede ver algo como:
+
+Bash
+
+DATABASE_URL detectada...
+Aplicando migraciones de base de datos...
+Migraciones aplicadas correctamente.
+Now listening on: [http://0.0.0.0:8080](http://0.0.0.0:8080)
+✅ 7. Verificación del Deploy
+Para comprobar que todo funciona:
+
+Abrir Swagger: https://tecwebfinal-production.up.railway.app/swagger
+
+Hacer login: POST /auth/login Copia el token JWT.
+
+Presionar el botón 🔒 Authorize en Swagger.
+
+Pegar: Bearer TU_TOKEN
+
+Probar los endpoints:
+
+GET /api/guardia
+
+GET /api/recluso
+
+GET /api/celda
+
+GET /api/expediente
+
+Si todos responden: ✅ el deploy es exitoso.
+
+🔄 8. Flujo del Deploy
+Subir el proyecto a GitHub.
+
+Crear proyecto en Railway.
+
+Conectar el repositorio de GitHub.
+
+Agregar servicio PostgreSQL.
+
+Configurar variables de entorno.
+
+Adaptar Program.cs para leer DATABASE_URL.
+
+Activar migraciones automáticas.
+
+Verificar logs en Railway.
+
+Probar endpoints con Swagger.
