@@ -236,3 +236,62 @@ En la pestaña Authorization:
 O en Headers:
 
 Authorization: Bearer TU_TOKEN_AQUI
+
+
+## 📋 Endpoints de la API
+
+### 🔐 Autenticación
+
+| Método | Endpoint | Permiso | Descripción | Body |
+|--------|----------|----------|-------------|------|
+| `POST` | `/auth/register` | Público | Registrar usuario | `{"nombre":"string","correo":"string","password":"string"}` |
+| `POST` | `/auth/login` | Público | Iniciar sesión | `{"correo":"string","password":"string"}` |
+
+### 🏢 Celdas
+
+| Método | Endpoint | Permiso | Descripción | Body |
+|--------|----------|----------|-------------|------|
+| `GET` | `/api/celda` | Auth | Todas las celdas | N/A |
+| `GET` | `/api/celda/{id}` | Auth | Celda específica | N/A |
+| `POST` | `/api/celda` | Admin | Crear celda | `{"numero":"string","capacidad":int,"tipo":"string"}` |
+| `PUT` | `/api/celda/{id}` | Admin | Actualizar celda | `{"numero":"string","capacidad":int,"tipo":"string"}` |
+| `DELETE` | `/api/celda/{id}` | Admin | Eliminar celda | N/A |
+
+### 📁 Expedientes
+
+| Método | Endpoint | Permiso | Descripción | Body |
+|--------|----------|----------|-------------|------|
+| `GET` | `/api/expediente` | Auth | Todos los expedientes | N/A |
+| `GET` | `/api/expediente/{id}` | Auth | Expediente específico | N/A |
+| `POST` | `/api/expediente` | Admin | Crear expediente | `{"codigo":"string","delitoPrincipal":"string","fechaRegistro":"datetime","reclusoId":"guid"}` |
+| `PUT` | `/api/expediente/{id}` | Admin | Actualizar expediente | `{"codigo":"string","delitoPrincipal":"string","fechaRegistro":"datetime"}` |
+| `DELETE` | `/api/expediente/{id}` | Admin | Eliminar expediente | N/A |
+
+### 👮 Guardias
+
+| Método | Endpoint | Permiso | Descripción | Body |
+|--------|----------|----------|-------------|------|
+| `GET` | `/api/v1/guardias` | Auth* | Todos los guardias | N/A |
+| `GET` | `/api/v1/guardias/{id}` | Auth* | Guardia específico | N/A |
+| `POST` | `/api/v1/guardias` | Auth* | Crear guardia | `{"nombre":"string","turno":"string","rango":"string"}` |
+| `PUT` | `/api/v1/guardias/{id}` | Auth* | Actualizar guardia | `{"nombre":"string","turno":"string","rango":"string"}` |
+| `DELETE` | `/api/v1/guardias/{id}` | Auth* | Eliminar guardia | N/A |
+
+### 👤 Reclusos
+
+| Método | Endpoint | Permiso | Descripción | Body |
+|--------|----------|----------|-------------|------|
+| `GET` | `/api/recluso` | Auth | Todos los reclusos | N/A |
+| `POST` | `/api/recluso` | Auth | Crear recluso | `{"nombre":"string","identificacion":"string","fechaNacimiento":"datetime","genero":"string"}` |
+| `PUT` | `/api/recluso/{id}` | Auth | Actualizar recluso | `{"nombre":"string","identificacion":"string","fechaNacimiento":"datetime","genero":"string"}` |
+| `DELETE` | `/api/recluso/{id}` | Auth | Eliminar recluso | N/A |
+
+## 🔐 Autenticación JWT
+
+### Configuración
+```json
+"Jwt": {
+  "Key": "clave-secreta-super-segura",
+  "Issuer": "PrisonAPI",
+  "Audience": "PrisonClient"
+}
