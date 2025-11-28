@@ -1,4 +1,4 @@
-"""# 🏛️ Sistema de Gestión Penitenciaria - API REST
+# 🏛️ Sistema de Gestión Penitenciaria - API REST
 
 ## 📌 1. Presentación del Proyecto
 
