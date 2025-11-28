@@ -339,7 +339,7 @@ Ambos servicios están conectados mediante variables de entorno.
 
 En Railway se configuraron las siguientes variables:
 
-```env
+env
 DATABASE_URL=postgresql://usuario:password@postgres.railway.internal:5432/railway
 JWT_KEY=TuClaveSecretaJWT
 ASPNETCORE_ENVIRONMENT=Production
@@ -351,7 +351,7 @@ DATABASE_URL la genera Railway automáticamente.
 JWT_KEY es tu clave secreta utilizada para firmar los tokens JWT.
 
 ASPNETCORE_ENVIRONMENT se configura en Production.
-
+---
 ## 🧠 5. Lógica de Conexión en Program.cs
 El proyecto detecta automáticamente si está en Railway o en local:
 
@@ -364,7 +364,7 @@ C#
 SslMode = Require
 TrustServerCertificate = true
 Esto asegura una conexión segura en producción.
-
+---
 ## 🗃 6. Migraciones Automáticas
 La API ejecuta automáticamente las migraciones al iniciarse:
 
@@ -403,7 +403,7 @@ GET /api/celda
 GET /api/expediente
 
 Si todos responden: ✅ el deploy es exitoso.
---
+---
 ## 🔄 8. Flujo del Deploy
 Subir el proyecto a GitHub.
 
