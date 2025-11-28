@@ -5,7 +5,7 @@ using final.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Npgsql; // 👈 IMPORTANTE
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +56,9 @@ if (!string.IsNullOrWhiteSpace(databaseUrl))
 
     connectionString = npgsqlBuilder.ToString();
 
-    Console.WriteLine($"Usando conexión Railway: Host={npgsqlBuilder.Host};Port={npgsqlBuilder.Port};Database={npgsqlBuilder.Database};Username={npgsqlBuilder.Username};Password=******");
+    Console.WriteLine(
+        $"Usando conexión Railway: Host={npgsqlBuilder.Host};Port={npgsqlBuilder.Port};Database={npgsqlBuilder.Database};Username={npgsqlBuilder.Username};Password=******"
+    );
 }
 else
 {
@@ -175,5 +177,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "3000";
+
+app.Urls.Clear();
+app.Urls.Add($"http://0.0.0.0:{port}");
+
 
 app.Run();
