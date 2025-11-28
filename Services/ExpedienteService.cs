@@ -1,4 +1,4 @@
-﻿using final.Models;
+﻿using final.Models.Entities;
 using final.Models.DTOs;
 using final.Repositories;
 

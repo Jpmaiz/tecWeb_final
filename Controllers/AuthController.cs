@@ -19,7 +19,7 @@ namespace final.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUsuarioDto dto)
         {
-            await _service.Register(dto);
+            await _service.Registrar(dto);
             return Ok(new { message = "Usuario creado" });
         }
 

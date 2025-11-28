@@ -1,4 +1,4 @@
-﻿using final.Models;
+﻿using final.Models.Entities;
 using final.Models.DTOs;
 using final.Repositories;
 
@@ -30,7 +30,7 @@ namespace final.Services
         public async Task<GuardiaDto?> GetByIdAsync(Guid id)
         {
             var g = await _repository.GetByIdAsync(id);
-            if (g == null) return null;
+            if (g is null) return null;
 
             return new GuardiaDto
             {
@@ -62,7 +62,7 @@ namespace final.Services
         public async Task<bool> UpdateAsync(Guid id, UpdateGuardiaDto dto)
         {
             var entity = await _repository.GetByIdAsync(id);
-            if (entity == null) return false;
+            if (entity is null) return false;
 
             entity.Nombre = dto.Nombre;
             entity.CI = dto.CI;
@@ -78,7 +78,7 @@ namespace final.Services
         public async Task<bool> DeleteAsync(Guid id)
         {
             var entity = await _repository.GetByIdAsync(id);
-            if (entity == null) return false;
+            if (entity is null) return false;
 
             await _repository.DeleteAsync(entity);
             await _repository.SaveChangesAsync();

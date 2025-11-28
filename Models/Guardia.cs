@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace final.Models
+namespace final.Models.Entities
 {
     public class Guardia
     {

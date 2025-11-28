@@ -1,5 +1,6 @@
 ﻿using final.Data;
-using final.Models;
+using final.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace final.Repositories
 {

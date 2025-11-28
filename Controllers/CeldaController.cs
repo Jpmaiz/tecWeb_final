@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using final.Models;
+using final.Models.Entities;
 using final.Models.DTOs;
 using final.Services;
 

@@ -1,4 +1,4 @@
-﻿using final.Models;
+﻿using final.Models.Entities;
 using final.Models.DTOs;
 using final.Repositories;
 
@@ -7,6 +7,7 @@ namespace final.Services
     public class CeldaService : ICeldaService
     {
         private readonly ICeldaRepository _repo;
+
         public CeldaService(ICeldaRepository repo)
         {
             _repo = repo;
@@ -21,6 +22,7 @@ namespace final.Services
                 Pabellon = dto.Pabellon,
                 Capacidad = dto.Capacidad
             };
+
             await _repo.Add(celda);
             return celda;
         }
@@ -37,8 +39,9 @@ namespace final.Services
 
         public async Task<Celda> UpdateCelda(UpdateCeldaDto dto, Guid id)
         {
-            Celda? celda = await GetOne(id);
-            if (celda == null) throw new Exception("Celda no existe.");
+            var celda = await GetOne(id);
+            if (celda is null)
+                throw new Exception("Celda no existe.");
 
             celda.Numero = dto.Numero;
             celda.Pabellon = dto.Pabellon;
@@ -50,8 +53,8 @@ namespace final.Services
 
         public async Task DeleteCelda(Guid id)
         {
-            Celda? celda = await GetOne(id);
-            if (celda != null)
+            var celda = await GetOne(id);
+            if (celda is not null)
             {
                 await _repo.Delete(celda);
             }

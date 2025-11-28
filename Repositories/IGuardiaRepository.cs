@@ -1,4 +1,4 @@
-﻿using final.Models;
+﻿using final.Models.Entities;
 
 namespace final.Repositories
 {

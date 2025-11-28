@@ -1,4 +1,7 @@
-﻿namespace final.Models
+﻿using System.Xml.Serialization;
+
+
+namespace final.Models.Entities
 {
     public class Expediente
     {
@@ -8,7 +11,7 @@
         public DateTime FechaRegistro { get; set; }
 
         // Relación 1:1 con Recluso
-        //public Guid ReclusoId { get; set; }
-        //public Recluso Recluso { get; set; }
+        public Guid ReclusoId { get; set; }
+        public Recluso Recluso { get; set; }
     }
 }
