@@ -1,325 +1,238 @@
-# 🏛️ Sistema de Gestión Penitenciaria — API REST
+"""# 🏛️ Sistema de Gestión Penitenciaria - API REST
 
 ## 📌 1. Presentación del Proyecto
 
 Este proyecto consiste en el desarrollo de una **API REST en ASP.NET Core (.NET 8)** para la gestión administrativa de un centro penitenciario, permitiendo el control digital y centralizado de:
 
-- Reclusos  
-- Guardias  
-- Celdas  
-- Expedientes  
-- Usuarios del sistema  
+- Reclusos
+- Guardias
+- Celdas
+- Expedientes
+- Usuarios del sistema
 
-El sistema resuelve el problema de la desorganización de datos en entornos penitenciarios, donde tradicionalmente la información se encuentra dispersa o gestionada de forma manual, generando inconsistencias y pérdida de información.
+El sistema resuelve el problema de la desorganización de datos en entornos penitenciarios, donde la información suele estar dispersa o gestionada manualmente.
 
-La API proporciona una solución:
+La API es:
+- Segura (JWT)
+- Escalable
+- Basada en arquitectura por capas
+- Preparada para despliegue con Docker y Railway
 
-✅ Segura (JWT)  
-✅ Escalable  
-✅ Basada en arquitectura por capas  
-✅ Preparada para despliegue en entornos reales (Docker + Railway)  
-
-Cumple con los requerimientos de la materia Tecnología Web: arquitectura por capas, Entity Framework Core, relaciones entre entidades, autenticación JWT, documentación Swagger y despliegue.
+Cumple con los requisitos de la materia Tecnología Web: arquitectura por capas, EF Core, JWT, relaciones, Swagger y despliegue.
 
 ---
 
 ## 🏗️ 2. Estructura del Proyecto
 
-La estructura sigue un diseño estándar profesional para APIs en ASP.NET Core:
+Estructura general:
 
-/Controllers
-/Data
-/Models
-/Entities
-/DTOs
-/Repositories
-/Services
-/Migrations
+/Controllers  
+/Data  
+/Models  
+/Models/Entities  
+/Models/DTOs  
+/Repositories  
+/Services  
+/Migrations  
 
-Program.cs
-appsettings.json
-
-yaml
-Copiar código
-
-### 📂 Descripción de Carpetas
-
-| Carpeta | Descripción |
-|--------|-------------|
-Controllers | Manejo de las solicitudes HTTP.
-Data | Contiene el `AppDbContext` y configuración de la base de datos.
-Models/Entities | Representaciones de tablas en la base de datos.
-Models/DTOs | Modelos usados para transferencia de datos.
-Repositories | Acceso a datos usando Entity Framework Core.
-Services | Lógica de negocio del sistema.
-Migrations | Historial de cambios en la base de datos.
-Program.cs | Configuración principal de la aplicación.
-appsettings.json | Configuración de conexión, JWT y variables.
+Program.cs  
+appsettings.json  
 
 ---
 
 ## 🧩 3. Arquitectura por Capas
 
-El proyecto utiliza una **Arquitectura por Capas** junto al patrón **Repository + Service**:
+El proyecto utiliza **Arquitectura por Capas** con patrón **Repository + Service**.
 
-### 🎯 Controllers
-Encargados de recibir solicitudes HTTP, validar datos y retornar respuestas.
+### Controllers
+Manejan solicitudes HTTP y respuestas.
 
-Ejemplo:
-AuthController
-GuardiasController
-ReclusoController
-CeldaController
-ExpedienteController
-UsuarioController
-
-yaml
-Copiar código
+Ejemplos:
+- AuthController
+- GuardiasController
+- ReclusoController
+- CeldaController
+- ExpedienteController
+- UsuarioController
 
 ---
 
-### ⚙️ Services
-Contienen la lógica de negocio.
+### Services
+Contienen la lógica de negocio del sistema.
 
-Ejemplo:
-GuardiaService
-ReclusoService
-UsuarioService
-CeldaService
-ExpedienteService
-
-yaml
-Copiar código
-
-Funciones:
-- Validaciones
-- Procesamiento de datos
-- Generación de tokens JWT
-- Lógica del sistema
+Ejemplos:
+- GuardiaService
+- ReclusoService
+- UsuarioService
+- CeldaService
+- ExpedienteService
 
 ---
 
-### 📦 Repositories
-Encargados del acceso directo a la base de datos mediante Entity Framework Core.
+### Repositories
+Acceso a datos con Entity Framework Core.
 
-Ejemplo:
-IGuardiaRepository / GuardiaRepository
-IUsuarioRepository / UsuarioRepository
-IReclusoRepository / ReclusoRepository
-
-yaml
-Copiar código
+Ejemplos:
+- IGuardiaRepository / GuardiaRepository
+- IUsuarioRepository / UsuarioRepository
+- IReclusoRepository / ReclusoRepository
 
 ---
 
-### 🗄️ Data / AppDbContext
-
-El `AppDbContext` administra:
-
-- Las entidades del sistema
-- Sus relaciones
-- La conexión con PostgreSQL
-
-Se utiliza enfoque **Code First** con migraciones.
+### Data / AppDbContext
+Encargado de gestionar las entidades, relaciones y conexión con PostgreSQL.
 
 ---
 
 ## 🧬 4. Entidades del Sistema
 
-### 👤 Usuario
-Representa a los usuarios que acceden al sistema.
+### Usuario
+Atributos:
+- Id
+- Nombre
+- Correo
+- PasswordHash
+- Rol
 
-Campos:
-- Id  
-- Nombre  
-- Correo  
-- PasswordHash  
-- Rol  
+### Guardia
+- Id
+- Nombre
+- CI
+- Turno
+- Rango
 
----
+### Celda
+- Id
+- Numero
+- Pabellon
+- Capacidad
 
-### 👮 Guardia
-Representa al personal penitenciario.
+### Recluso
+- Id
+- Nombre
+- CI
+- FechaIngreso
+- CondenaAnios
 
-Campos:
-- Id  
-- Nombre  
-- CI  
-- Turno  
-- Rango  
-
----
-
-### 🏢 Celda
-Representa las celdas donde se encuentran los reclusos.
-
-Campos:
-- Id  
-- Numero  
-- Pabellon  
-- Capacidad  
-
----
-
-### 🚷 Recluso
-Representa a los privados de libertad.
-
-Campos:
-- Id  
-- Nombre  
-- CI  
-- FechaIngreso  
-- CondenaAnios  
-
----
-
-### 📁 Expediente
-Representa el historial legal del recluso.
-
-Campos:
-- Id  
-- Codigo  
-- DelitoPrincipal  
-- FechaRegistro  
+### Expediente
+- Id
+- Codigo
+- DelitoPrincipal
+- FechaRegistro
 
 ---
 
 ## 🔐 5. Autenticación, Autorización y JWT
 
-La API implementa un sistema de **autenticación y autorización basado en JSON Web Tokens (JWT)**, garantizando que solo los usuarios autenticados puedan acceder a rutas protegidas.
-
-Se utiliza el atributo `[Authorize]` de ASP.NET Core.
+La API implementa autenticación basada en **JSON Web Tokens (JWT)** utilizando `[Authorize]` para proteger rutas.
 
 ---
 
 ## 🧩 Endpoints de Autenticación
 
-### 📌 Registro de usuario
+### Registro de Usuario
+
 POST /auth/register
 
-css
-Copiar código
-
 Body de ejemplo:
-```json
+
 {
   "nombre": "Juan Pablo",
   "ci": "1234567",
   "correo": "juan@test.com",
   "password": "123456"
 }
-📌 Login
-bash
-Copiar código
+
+---
+
+### Login
+
 POST /auth/login
+
 Body de ejemplo:
 
-json
-Copiar código
 {
   "correo": "juan@test.com",
   "password": "123456"
 }
+
 Respuesta:
 
-json
-Copiar código
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
-🔐 Funcionamiento del JWT
+
+---
+
+## 🔐 Funcionamiento del JWT
+
 El token JWT contiene:
+- Id del usuario
+- Correo
+- Nombre
+- Rol (Admin / User)
 
-Id del usuario
+Configurado en:
 
-Correo
-
-Nombre
-
-Rol (Admin / User)
-
-Configuración en appsettings.json:
-
-json
-Copiar código
 "Jwt": {
   "Key": "CLAVE_SUPER_SECRETA",
   "Issuer": "PrisonApi",
   "Audience": "PrisonClient"
 }
-🔒 Protección de rutas
-Las rutas protegidas utilizan:
 
-csharp
-Copiar código
-[Authorize]
-Ejemplo real:
+---
 
-csharp
-Copiar código
-[ApiController]
-[Route("api/recluso")]
+## 🔒 Protección de rutas
+
+Se usa:
+
 [Authorize]
-public class ReclusoController : ControllerBase
+
+Ejemplo:
+
+[ApiController]  
+[Route("api/recluso")]  
+[Authorize]  
+public class ReclusoController : ControllerBase  
 {
     // Todas las rutas requieren JWT
 }
-✅ Autorización por Roles
-Se utilizan los roles:
-
-Admin
-
-User
-
-Incluidos en el JWT mediante:
-
-csharp
-Copiar código
-new Claim(ClaimTypes.Role, u.Rol);
-Puede restringirse acceso por rol:
-
-csharp
-Copiar código
-[Authorize(Roles = "Admin")]
-🔑 Uso del Token en Swagger
-Ejecutar:
-
-bash
-Copiar código
-POST /auth/login
-Copiar el token generado.
-
-En Swagger, hacer clic en 🔒 Authorize.
-
-Pegar:
-
-nginx
-Copiar código
-Bearer TU_TOKEN_AQUI
-Ahora podrás probar todas las rutas protegidas.
-
-🔑 Uso del Token en Postman
-En Postman agregar:
-
-makefile
-Copiar código
-Authorization: Bearer TU_TOKEN_AQUI
-En la pestaña Authorization usando tipo: Bearer Token.
-
-✅ Esta implementación cumple con:
-Autenticación JWT
-
-Autorización por roles
-
-Protección con [Authorize]
-
-Arquitectura por capas
-
-Uso de EF Core
-
-Buenas prácticas profesionales
-
-yaml
-Copiar código
 
 ---
+
+## ✅ Autorización por Roles
+
+Roles soportados:
+- Admin
+- User
+
+Implementado con:
+
+new Claim(ClaimTypes.Role, u.Rol);
+
+Ejemplo de protección:
+
+[Authorize(Roles = "Admin")]
+
+---
+
+## 🔑 Uso del Token en Swagger
+
+1. Ejecutar POST /auth/login  
+2. Copiar token  
+3. Acceder a http://localhost:5114/swagger  
+4. Presionar botón Authorize  
+5. Pegar: Bearer TU_TOKEN_AQUI  
+
+---
+
+## 🔑 Uso del Token en Postman
+
+En la pestaña Authorization:
+
+- Tipo: Bearer Token
+- Token: TU_TOKEN_AQUI
+
+O en Headers:
+
+Authorization: Bearer TU_TOKEN_AQUI
