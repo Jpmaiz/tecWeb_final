@@ -65,7 +65,7 @@ namespace final.Services
                 new Claim("id", u.Id.ToString()),
                 new Claim("correo", u.Correo),
                 new Claim(ClaimTypes.Name, u.Nombre),
-                new Claim(ClaimTypes.Role, u.Rol) // 👈 AQUÍ VA EL ROL EN EL TOKEN
+                new Claim(ClaimTypes.Role, u.Rol) // 👈 AQUÍ VA EL ROL DEL USUARIO EN EL TOKEN
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));

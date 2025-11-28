@@ -7,7 +7,7 @@ using final.Services;
 namespace final.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     public class CeldaController : ControllerBase
     {
         private readonly ICeldaService _service;

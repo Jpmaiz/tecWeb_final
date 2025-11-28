@@ -1,10 +1,13 @@
-using System.Text;
+ï»¿using System.Text;
+using DotNetEnv;
 using final.Data;
 using final.Repositories;
 using final.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IGuardiaRepository, GuardiaRepository>();
 builder.Services.AddScoped<ICeldaRepository, CeldaRepository>();
 builder.Services.AddScoped<IExpedienteRepository, ExpedienteRepository>();
-// Si ya tienes estos, déjalos también:
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IReclusoRepository, ReclusoRepository>();
 
@@ -27,7 +29,10 @@ builder.Services.AddScoped<IExpedienteService, ExpedienteService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IReclusoService, ReclusoService>();
 
-// ?? JWT
+// JWT
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
+    ?? "clave_por_defecto_super_larga_para_desarrollo_1234567890";
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -38,14 +43,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+                Encoding.UTF8.GetBytes(jwtKey)
             )
         };
     });
 
 builder.Services.AddAuthorization();
 
-// Controllers + Swagger clásico
+// â† AGREGAR ESTO - POLÃTICA ADMINONLY
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("Admin"));
+});
+
+// Controllers + Swagger clÃ¡sico
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
