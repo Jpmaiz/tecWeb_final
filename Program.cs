@@ -9,16 +9,20 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // ============================================
-// 1. Cargar variables de entorno (.env)
+// 1. Cargar variables de entorno (.env) SOLO EN LOCAL
 // ============================================
 try
 {
-    // Si tienes DotNetEnv instalado, esto carga el .env en local.
-    DotNetEnv.Env.Load();
+    if (builder.Environment.IsDevelopment())
+    {
+        // Requiere el paquete DotNetEnv
+        DotNetEnv.Env.Load();
+        Console.WriteLine("Archivo .env cargado (Development).");
+    }
 }
 catch
 {
-    // Si no existe el .env o no está el paquete, no rompemos la app.
+    Console.WriteLine(".env no encontrado o DotNetEnv no instalado. Continuando sin .env.");
 }
 
 // ============================================
@@ -32,16 +36,24 @@ var pgHost = Environment.GetEnvironmentVariable("POSTGRES_HOST") ?? "localhost";
 var pgDb = Environment.GetEnvironmentVariable("POSTGRES_DB") ?? "carcel_db";
 var pgPort = Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432";
 
-// Connection string construida desde env vars
-var connectionString =
-    $"Host={pgHost};Port={pgPort};Database={pgDb};Username={pgUser};Password={pgPassword}";
+//// Connection string construida desde env vars
+//var connectionString =
+//    $"Host={pgHost};Port={pgPort};Database={pgDb};Username={pgUser};Password={pgPassword}";
 
-// Si quieres, aquí puedes forzar SSL solo en producción:
-// var isProduction = builder.Environment.IsProduction();
-// if (isProduction)
-// {
-//     connectionString += ";SSL Mode=Require;Trust Server Certificate=true";
-// }
+// 🔧 MODO MIGRACIÓN DIRECTO A RAILWAY (TEMPORAL)
+var connectionString =
+    "Host=tramway.proxy.rlwy.net;Port=37462;Database=railway;Username=postgres;Password=qhLBgUktqbazjvpYTSQhhVlsczwoESra;Ssl Mode=Require;Trust Server Certificate=true";
+
+
+// Si NO estamos apuntando a localhost, asumimos que es Railway u otro server y usamos SSL
+if (!string.Equals(pgHost, "localhost", StringComparison.OrdinalIgnoreCase) &&
+    !string.Equals(pgHost, "127.0.0.1", StringComparison.OrdinalIgnoreCase))
+{
+    connectionString += ";Ssl Mode=Require;Trust Server Certificate=true";
+    Console.WriteLine("Usando SSL para PostgreSQL (no es localhost).");
+}
+
+Console.WriteLine($"Usando cadena de conexión: Host={pgHost};Port={pgPort};Database={pgDb};Username={pgUser};Password=******");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -67,7 +79,7 @@ builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.RequireHttpsMetadata = false; // en Railway va con https igual, en local puede ser http
+        options.RequireHttpsMetadata = false; // Railway termina HTTPS, en local puede ser http
         options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -118,12 +130,13 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     try
     {
+        Console.WriteLine("Aplicando migraciones de base de datos...");
         db.Database.Migrate();
+        Console.WriteLine("Migraciones aplicadas correctamente.");
     }
     catch (Exception ex)
     {
         Console.WriteLine($"Error aplicando migraciones: {ex.Message}");
-        // Puedes loguearlo, pero no detenemos la app a menos que quieras.
     }
 }
 
@@ -138,8 +151,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    // Si quieres que Swagger también funcione en producción (Railway),
-    // puedes descomentar esto:
+    // Swagger también disponible en producción (Railway)
     app.UseSwagger();
     app.UseSwaggerUI();
 }
