@@ -1,7 +1,10 @@
+using System.Text;
 using final.Data;
 using final.Repositories;
 using final.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,47 +12,56 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-<<<<<<< HEAD
-// Dependency Injection: Guardia
+// Repositorios
 builder.Services.AddScoped<IGuardiaRepository, GuardiaRepository>();
-builder.Services.AddScoped<IGuardiaService, GuardiaService>();
+builder.Services.AddScoped<ICeldaRepository, CeldaRepository>();
+builder.Services.AddScoped<IExpedienteRepository, ExpedienteRepository>();
+// Si ya tienes estos, déjalos también:
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IReclusoRepository, ReclusoRepository>();
 
-// Controllers + OpenAPI (.NET 9 style)
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-=======
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
+// Servicios
+builder.Services.AddScoped<IGuardiaService, GuardiaService>();
+builder.Services.AddScoped<ICeldaService, CeldaService>();
+builder.Services.AddScoped<IExpedienteService, ExpedienteService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IReclusoService, ReclusoService>();
+
+// ?? JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new()
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
             )
         };
     });
 
 builder.Services.AddAuthorization();
 
-
->>>>>>> e09d72a092387dfc00b6af8faedb5030a6ffdd85
-builder.Services.AddOpenApi();
+// Controllers + Swagger clásico
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// OpenAPI document
+// Swagger UI
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
-// Luego agregaremos UseAuthentication() cuando metamos JWT
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

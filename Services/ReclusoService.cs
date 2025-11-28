@@ -4,7 +4,7 @@ using final.Repositories;
 
 namespace final.Services
 {
-    public class ReclusoService
+    public class ReclusoService : IReclusoService
     {
         private readonly IReclusoRepository _repo;
 
@@ -22,62 +22,68 @@ namespace final.Services
                 Id = r.Id,
                 Nombre = r.Nombre,
                 CI = r.CI,
-                Delito = r.Delito,
-                Celda = r.Celda
+                FechaIngreso = r.FechaIngreso,
+                CondenaAnios = r.CondenaAnios,
+                UsuarioId = r.UsuarioId
             }).ToList();
         }
 
         public async Task<ReclusoDto> Create(CreateReclusoDto dto)
         {
-            var r = new Recluso
+            var recluso = new Recluso
             {
                 Id = Guid.NewGuid(),
                 Nombre = dto.Nombre,
                 CI = dto.CI,
-                Delito = dto.Delito,
-                Celda = dto.Celda
+                FechaIngreso = dto.FechaIngreso,
+                CondenaAnios = dto.CondenaAnios,
+                UsuarioId = dto.UsuarioId
             };
 
-            await _repo.Add(r);
+            await _repo.Add(recluso);
 
             return new ReclusoDto
             {
-                Id = r.Id,
-                Nombre = r.Nombre,
-                CI = r.CI,
-                Delito = r.Delito,
-                Celda = r.Celda
+                Id = recluso.Id,
+                Nombre = recluso.Nombre,
+                CI = recluso.CI,
+                FechaIngreso = recluso.FechaIngreso,
+                CondenaAnios = recluso.CondenaAnios,
+                UsuarioId = recluso.UsuarioId
             };
         }
 
         public async Task<ReclusoDto> Update(Guid id, UpdateReclusoDto dto)
         {
-            var r = await _repo.GetById(id);
-            if (r == null) throw new Exception("Recluso no encontrado");
+            var recluso = await _repo.GetById(id);
+            if (recluso is null)
+                throw new Exception("Recluso no encontrado");
 
-            r.Nombre = dto.Nombre;
-            r.CI = dto.CI;
-            r.Delito = dto.Delito;
-            r.Celda = dto.Celda;
+            recluso.Nombre = dto.Nombre;
+            recluso.CI = dto.CI;
+            recluso.FechaIngreso = dto.FechaIngreso;
+            recluso.CondenaAnios = dto.CondenaAnios;
 
-            await _repo.Update(r);
+            await _repo.Update(recluso);
 
             return new ReclusoDto
             {
-                Id = r.Id,
-                Nombre = r.Nombre,
-                CI = r.CI,
-                Delito = r.Delito,
-                Celda = r.Celda
+                Id = recluso.Id,
+                Nombre = recluso.Nombre,
+                CI = recluso.CI,
+                FechaIngreso = recluso.FechaIngreso,
+                CondenaAnios = recluso.CondenaAnios,
+                UsuarioId = recluso.UsuarioId
             };
         }
 
         public async Task<bool> Delete(Guid id)
         {
-            var r = await _repo.GetById(id);
-            if (r == null) return false;
+            var recluso = await _repo.GetById(id);
+            if (recluso is null)
+                return false;
 
-            await _repo.Delete(r);
+            await _repo.Delete(recluso);
             return true;
         }
     }

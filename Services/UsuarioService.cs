@@ -8,7 +8,7 @@ using System.Text;
 
 namespace final.Services
 {
-    public class UsuarioService
+    public class UsuarioService : IUsuarioService
     {
         private readonly IUsuarioRepository _repo;
         private readonly IConfiguration _config;

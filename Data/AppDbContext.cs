@@ -1,22 +1,6 @@
-<<<<<<< HEAD
-﻿using final.Models;
 using Microsoft.EntityFrameworkCore;
-
-namespace final.Data
-{
-    public class AppDbContext : DbContext
-    {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
-
-        public DbSet<Guardia> Guardias { get; set; } = null!;
-    }
-}
-=======
+using final.Models.Entities;
 using final.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace final.Data
 {
@@ -27,9 +11,22 @@ namespace final.Data
         {
         }
 
+        // DbSets
+        public DbSet<Celda> Celdas { get; set; } = null!;
+        public DbSet<Expediente> Expedientes { get; set; } = null!;
         public DbSet<Guardia> Guardias { get; set; } = null!;
         public DbSet<Usuario> Usuarios { get; set; } = null!;
         public DbSet<Recluso> Reclusos { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Celda>();
+            modelBuilder.Entity<Expediente>();
+            modelBuilder.Entity<Guardia>();
+            modelBuilder.Entity<Usuario>();
+            modelBuilder.Entity<Recluso>();
+        }
     }
 }
->>>>>>> e09d72a092387dfc00b6af8faedb5030a6ffdd85

@@ -1,3 +1,4 @@
+using final.Data;
 using final.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,9 +6,9 @@ namespace final.Repositories
 {
     public class ReclusoRepository : IReclusoRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public ReclusoRepository(ApplicationDbContext context)
+        public ReclusoRepository(AppDbContext context)
         {
             _context = context;
         }
