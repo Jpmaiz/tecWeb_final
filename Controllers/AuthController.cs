@@ -1,4 +1,4 @@
-using final.Models.DTOs;
+﻿using final.Models.DTOs;
 using final.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -9,9 +9,9 @@ namespace final.Controllers
     [Route("auth")]
     public class AuthController : ControllerBase
     {
-        private readonly UsuarioService _service;
+        private readonly IUsuarioService _service;
 
-        public AuthController(UsuarioService service)
+        public AuthController(IUsuarioService service)
         {
             _service = service;
         }

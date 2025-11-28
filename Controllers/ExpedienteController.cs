@@ -7,7 +7,7 @@ using final.Services;
 namespace final.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     public class ExpedienteController : ControllerBase
     {
         private readonly IExpedienteService _service;

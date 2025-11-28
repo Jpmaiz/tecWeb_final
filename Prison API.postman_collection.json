@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "0f6056f8-02df-45b7-9342-3d4600fba52c",
+		"name": "Prison API",
+		"description": "StartFragment\n\n```\nAPI Sistema Penitenciario - Proyecto Final\n\n ```\n\nEndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47613110",
+		"_collection_link": "https://josue-camacho-4474502.postman.co/workspace/Josue-Junior-Camacho-Canaviri's~76685fae-49ad-471f-8aee-a5d9b50888ac/collection/47613110-0f6056f8-02df-45b7-9342-3d4600fba52c?action=share&source=collection_link&creator=47613110"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": []
+		},
+		{
+			"name": "Celda",
+			"item": [
+				{
+					"name": "GET All Celdas",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GET Celda by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NjcyM2U0LTkzYjItNDA0Yi1hYTUwLWU4YTA3ZjA2OGE4ZCIsImNvcnJlbyI6ImFkbWluMTIzQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluaXN0cmFkb3JkIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NjQzMjQ1NTAsImlzcyI6IlByaXNvbkFQSSIsImF1ZCI6IlByaXNvbkNsaWVudCJ9.Nvpur27PBnB3samsXJUPysTOxNDPGrhYOFDu_RVA4Lc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/celda/39104a5b-dee0-47f6-9319-c39f487872b8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"celda",
+								"39104a5b-dee0-47f6-9319-c39f487872b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Create Celda\"",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NjcyM2U0LTkzYjItNDA0Yi1hYTUwLWU4YTA3ZjA2OGE4ZCIsImNvcnJlbyI6ImFkbWluMTIzQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluaXN0cmFkb3JkIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NjQzMjQ1NTAsImlzcyI6IlByaXNvbkFQSSIsImF1ZCI6IlByaXNvbkNsaWVudCJ9.Nvpur27PBnB3samsXJUPysTOxNDPGrhYOFDu_RVA4Lc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numero\": 101,\r\n  \"pabellon\": \"Pabellón A\",\r\n  \"capacidad\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/celda",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"celda"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\"PUT Update Celda\"",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "\"DELETE Celda\"",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Guardia",
+			"item": []
+		},
+		{
+			"name": "Recluso",
+			"item": []
+		},
+		{
+			"name": "Expediente",
+			"item": [
+				{
+					"name": "\"GET All Expedientes\"",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "\"GET Expediente by ID\"",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NjcyM2U0LTkzYjItNDA0Yi1hYTUwLWU4YTA3ZjA2OGE4ZCIsImNvcnJlbyI6ImFkbWluMTIzQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluaXN0cmFkb3JkIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NjQzMjQ1NTAsImlzcyI6IlByaXNvbkFQSSIsImF1ZCI6IlByaXNvbkNsaWVudCJ9.Nvpur27PBnB3samsXJUPysTOxNDPGrhYOFDu_RVA4Lc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/expediente/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expediente",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "\"POST Create Expediente\"",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NjcyM2U0LTkzYjItNDA0Yi1hYTUwLWU4YTA3ZjA2OGE4ZCIsImNvcnJlbyI6ImFkbWluMTIzQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluaXN0cmFkb3JkIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NjQzMjQ1NTAsImlzcyI6IlByaXNvbkFQSSIsImF1ZCI6IlByaXNvbkNsaWVudCJ9.Nvpur27PBnB3samsXJUPysTOxNDPGrhYOFDu_RVA4Lc",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": \"EXP-001\",\r\n    \"delitoPrincipal\": \"Robo agravado\",\r\n    \"fechaRegistro\": \"2024-01-15T00:00:00\",\r\n    \"reclusoId\": \"59d8a9c4-7a2e-4b8a-b8c5-6e9f3b2a1d7c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/expediente",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expediente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NjcyM2U0LTkzYjItNDA0Yi1hYTUwLWU4YTA3ZjA2OGE4ZCIsImNvcnJlbyI6ImFkbWluMTIzQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluaXN0cmFkb3JkIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NjQzMjQ1NTAsImlzcyI6IlByaXNvbkFQSSIsImF1ZCI6IlByaXNvbkNsaWVudCJ9.Nvpur27PBnB3samsXJUPysTOxNDPGrhYOFDu_RVA4Lc",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": \"EXP-001-ACTUALIZADO\",\r\n    \"delitoPrincipal\": \"Robo calificado\",\r\n    \"fechaRegistro\": \"2024-01-20T00:00:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/expediente",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expediente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NjcyM2U0LTkzYjItNDA0Yi1hYTUwLWU4YTA3ZjA2OGE4ZCIsImNvcnJlbyI6ImFkbWluMTIzQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluaXN0cmFkb3JkIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NjQzMjQ1NTAsImlzcyI6IlByaXNvbkFQSSIsImF1ZCI6IlByaXNvbkNsaWVudCJ9.Nvpur27PBnB3samsXJUPysTOxNDPGrhYOFDu_RVA4Lc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": \"EXP-001-ACTUALIZADO\",\r\n    \"delitoPrincipal\": \"Robo calificado\",\r\n    \"fechaRegistro\": \"2024-01-20T00:00:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/expediente/59d8a9c4-7a2e-4b8a-b8c5-6e9f3b2a1d7c",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"expediente",
+								"59d8a9c4-7a2e-4b8a-b8c5-6e9f3b2a1d7c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Administrador\",\r\n  \"ci\": \"12345678\",\r\n  \"correo\": \"admin@test.com\",\r\n  \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correo\": \"admin@test.com\",\r\n  \"password\": \"admin123\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": ""
+		},
+		{
+			"key": "jwt_token",
+			"value": ""
+		}
+	]
+}
