@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "0f6056f8-02df-45b7-9342-3d4600fba52c",
-		"name": "Prison API - Completa",
-		"description": "API Sistema Penitenciario - Proyecto Final - Todos los endpoints",
+		"name": "Prison API - Completa (Corregida)",
+		"description": "Sistema Penitenciario - Proyecto Final TecWeb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -10,106 +10,43 @@
 			"name": "🔐 Auth",
 			"item": [
 				{
-					"name": "Register",
+					"name": "Register Admin",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"nombre\": \"Administrador\",\n  \"ci\": \"12345678\",\n  \"correo\": \"admin@test.com\",\n  \"password\": \"admin123\",\n  \"rol\": \"Admin\"\n}"
 						},
-						"url": {
-							"raw": "{{base_url}}/auth/register",
-							"host": [ "{{base_url}}" ],
-							"path": [ "auth", "register" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/auth/register"
+					}
 				},
 				{
-					"name": "Login",
+					"name": "Login Admin",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"correo\": \"admin@test.com\",\n  \"password\": \"admin123\"\n}"
 						},
-						"url": {
-							"raw": "{{base_url}}/auth/login",
-							"host": [ "{{base_url}}" ],
-							"path": [ "auth", "login" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/auth/login"
+					}
 				}
 			]
 		},
 		{
-			"name": "👤 Usuario",
-			"item": [
-				{
-					"name": "Register Usuario",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Usuario Normal\",\n  \"ci\": \"87654321\",\n  \"correo\": \"user@test.com\",\n  \"password\": \"user123\",\n  \"rol\": \"User\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/usuario/register",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "usuario", "register" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login Usuario",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"correo\": \"user@test.com\",\n  \"password\": \"user123\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/usuario/login",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "usuario", "login" ]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "🏢 Celda",
+			"name": "🏢 Celda (Admin)",
 			"item": [
 				{
 					"name": "GET All Celdas",
@@ -118,36 +55,11 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
+								"value": "Bearer {{jwt_token}}"
 							}
 						],
-						"url": {
-							"raw": "{{base_url}}/api/celda",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "celda" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Celda by ID",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/celda/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "celda", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/api/celda"
+					}
 				},
 				{
 					"name": "POST Create Celda",
@@ -156,104 +68,37 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
+								"value": "Bearer {{jwt_token}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"numero\": \"101\",\n  \"pabellon\": \"Pabellón A\",\n  \"capacidad\": 5\n}"
+							"raw": "{\n  \"numero\": 101,\n  \"pabellon\": \"Pabellón A\",\n  \"capacidad\": 5\n}"
 						},
-						"url": {
-							"raw": "{{base_url}}/api/celda",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "celda" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT Update Celda",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"numero\": \"101-A\",\n  \"pabellon\": \"Pabellón A Actualizado\",\n  \"capacidad\": 6\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/celda/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "celda", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE Celda",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/celda/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "celda", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/api/celda"
+					}
 				}
 			]
 		},
 		{
-			"name": "👮 Guardia",
+			"name": "👮 Guardia (Admin)",
 			"item": [
 				{
-					"name": "GET All Guardias",
+					"name": "GET Guardias",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/guardias",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "v1", "guardias" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Guardia by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/guardias/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "v1", "guardias", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": "{{base_url}}/api/v1/guardias"
+					}
 				},
 				{
 					"name": "POST Create Guardia",
@@ -262,57 +107,19 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"nombre\": \"Juan Pérez\",\n  \"ci\": \"1234567\",\n  \"turno\": \"Nocturno\",\n  \"rango\": \"Oficial\"\n}"
 						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/guardias",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "v1", "guardias" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT Update Guardia",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Juan Pérez Actualizado\",\n  \"turno\": \"Diurno\",\n  \"rango\": \"Sargento\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/guardias/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "v1", "guardias", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE Guardia",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/v1/guardias/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "v1", "guardias", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/api/v1/guardias"
+					}
 				}
 			]
 		},
@@ -320,23 +127,17 @@
 			"name": "👤 Recluso",
 			"item": [
 				{
-					"name": "GET All Reclusos",
+					"name": "GET Reclusos",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
+								"value": "Bearer {{jwt_token}}"
 							}
 						],
-						"url": {
-							"raw": "{{base_url}}/api/recluso",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "recluso" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/api/recluso"
+					}
 				},
 				{
 					"name": "POST Create Recluso",
@@ -345,116 +146,37 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
+								"value": "Bearer {{jwt_token}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Carlos López\",\n  \"ci\": \"7654321\",\n  \"fechaNacimiento\": \"1985-05-15T00:00:00\",\n  \"genero\": \"Masculino\",\n  \"fechaIngreso\": \"2024-01-01T00:00:00\",\n  \"condenaAnios\": 10\n}"
+							"raw": "{\n  \"nombre\": \"Carlos López\",\n  \"ci\": \"7654321\",\n  \"fechaIngreso\": \"2024-01-01T00:00:00\",\n  \"condenaAnios\": 10,\n  \"usuarioId\": \"GUID_DE_USUARIO\"\n}"
 						},
-						"url": {
-							"raw": "{{base_url}}/api/recluso",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "recluso" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT Update Recluso",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Carlos López Actualizado\",\n  \"ci\": \"7654321\",\n  \"fechaNacimiento\": \"1985-05-15T00:00:00\",\n  \"genero\": \"Masculino\",\n  \"condenaAnios\": 8\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/recluso/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "recluso", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE Recluso",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/recluso/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "recluso", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/api/recluso"
+					}
 				}
 			]
 		},
 		{
-			"name": "📁 Expediente",
+			"name": "📁 Expediente (Admin)",
 			"item": [
 				{
-					"name": "GET All Expedientes",
+					"name": "GET Expedientes",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
+								"value": "Bearer {{jwt_token}}"
 							}
 						],
-						"url": {
-							"raw": "{{base_url}}/api/expediente",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "expediente" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET Expediente by ID",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/expediente/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "expediente", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/api/expediente"
+					}
 				},
 				{
 					"name": "POST Create Expediente",
@@ -462,74 +184,20 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
+								"key": "Content-Type",
+								"value": "application/json"
 							},
 							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"codigo\": \"EXP-001\",\n    \"delitoPrincipal\": \"Robo agravado\",\n    \"fechaRegistro\": \"2024-01-15T00:00:00\",\n    \"reclusoId\": \"39104a5b-dee0-47f6-9319-c39f487872b8\"\n}"
+							"raw": "{\n  \"codigo\": \"EXP-001\",\n  \"delitoPrincipal\": \"Robo agravado\",\n  \"fechaRegistro\": \"2024-01-15T00:00:00\",\n  \"reclusoId\": \"GUID_DE_RECLUSO\"\n}"
 						},
-						"url": {
-							"raw": "{{base_url}}/api/expediente",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "expediente" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "PUT Update Expediente",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"codigo\": \"EXP-001-ACTUALIZADO\",\n    \"delitoPrincipal\": \"Robo calificado\",\n    \"fechaRegistro\": \"2024-01-20T00:00:00\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/expediente/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "expediente", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE Expediente",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/expediente/39104a5b-dee0-47f6-9319-c39f487872b8",
-							"host": [ "{{base_url}}" ],
-							"path": [ "api", "expediente", "39104a5b-dee0-47f6-9319-c39f487872b8" ]
-						}
-					},
-					"response": []
+						"url": "{{base_url}}/api/expediente"
+					}
 				}
 			]
 		}
@@ -537,29 +205,11 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:5114",
-			"type": "string"
+			"value": "http://localhost:3000"
 		},
 		{
 			"key": "jwt_token",
-			"value": "tu_token_aqui",
-			"type": "string"
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [ "" ]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [ "" ]
-			}
+			"value": "PEGA_AQUI_EL_TOKEN_ADMIN"
 		}
 	]
 }
