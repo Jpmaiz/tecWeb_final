@@ -7,6 +7,7 @@ namespace final.Repositories
     public class ExpedienteRepository : IExpedienteRepository
     {
         private readonly AppDbContext _db;
+
         public ExpedienteRepository(AppDbContext db)
         {
             _db = db;
@@ -20,12 +21,16 @@ namespace final.Repositories
 
         public async Task<IEnumerable<Expediente>> GetAll()
         {
-            return await _db.Expedientes.ToListAsync();
+            return await _db.Expedientes
+                .Include(e => e.Recluso)
+                .ToListAsync();
         }
 
         public async Task<Expediente?> GetOne(Guid id)
         {
-            return await _db.Expedientes.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Expedientes
+                .Include(e => e.Recluso)
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task Update(Expediente expediente)

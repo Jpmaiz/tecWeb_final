@@ -33,7 +33,8 @@ namespace final.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> CreateExpediente([FromBody] CreateExpedienteDto dto)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -42,7 +43,8 @@ namespace final.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> UpdateExpediente([FromBody] UpdateExpedienteDto dto, Guid id)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -51,7 +53,8 @@ namespace final.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteExpediente(Guid id)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);

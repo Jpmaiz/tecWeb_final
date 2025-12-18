@@ -1,12 +1,16 @@
 ﻿using final.Models.DTOs;
 using final.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace final.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize(Roles = "Admin")]
+
     public class GuardiasController : ControllerBase
+
     {
         private readonly IGuardiaService _service;
 

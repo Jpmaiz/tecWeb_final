@@ -15,12 +15,16 @@ namespace final.Repositories
 
         public async Task<List<Guardia>> GetAllAsync()
         {
-            return await _context.Guardias.ToListAsync();
+            return await _context.Guardias
+                .Include(g => g.Reclusos)
+                .ToListAsync();
         }
 
         public async Task<Guardia?> GetByIdAsync(Guid id)
         {
-            return await _context.Guardias.FirstOrDefaultAsync(g => g.Id == id);
+            return await _context.Guardias
+                .Include(g => g.Reclusos)
+                .FirstOrDefaultAsync(g => g.Id == id);
         }
 
         public async Task AddAsync(Guardia guardia)

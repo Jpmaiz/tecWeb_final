@@ -19,5 +19,7 @@ namespace final.Models.Entities
 
         [Required]
         public string Rango { get; set; } = null!;
+
+        public ICollection<Recluso> Reclusos { get; set; } = new List<Recluso>();
     }
 }

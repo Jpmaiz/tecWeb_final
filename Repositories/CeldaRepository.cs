@@ -7,6 +7,7 @@ namespace final.Repositories
     public class CeldaRepository : ICeldaRepository
     {
         private readonly AppDbContext _db;
+
         public CeldaRepository(AppDbContext db)
         {
             _db = db;
@@ -20,12 +21,16 @@ namespace final.Repositories
 
         public async Task<IEnumerable<Celda>> GetAll()
         {
-            return await _db.Celdas.ToListAsync();
+            return await _db.Celdas
+                .Include(c => c.Reclusos)
+                .ToListAsync();
         }
 
         public async Task<Celda?> GetOne(Guid id)
         {
-            return await _db.Celdas.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Celdas
+                .Include(c => c.Reclusos)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task Update(Celda celda)

@@ -10,12 +10,13 @@ namespace final.Controllers
     [Authorize]
     public class ReclusoController : ControllerBase
     {
-        private readonly ReclusoService _service;
+        private readonly IReclusoService _service;
 
-        public ReclusoController(ReclusoService service)
+        public ReclusoController(IReclusoService service)
         {
             _service = service;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

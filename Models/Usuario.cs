@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace final.Models.Entities
@@ -22,5 +22,8 @@ namespace final.Models.Entities
 
         [Required]
         public string Rol { get; set; } = "User";
+
+        // 🔹 1:N Usuario -> Reclusos
+        public ICollection<Recluso> Reclusos { get; set; } = new List<Recluso>();
     }
 }

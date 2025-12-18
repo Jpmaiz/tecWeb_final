@@ -33,7 +33,8 @@ namespace final.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> CreateCelda([FromBody] CreateCeldaDto dto)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -42,7 +43,8 @@ namespace final.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> UpdateCelda([FromBody] UpdateCeldaDto dto, Guid id)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -51,7 +53,8 @@ namespace final.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> DeleteCelda(Guid id)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);

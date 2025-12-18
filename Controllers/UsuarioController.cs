@@ -8,12 +8,13 @@ namespace final.Controllers
     [Route("api/usuario")]
     public class UsuarioController : ControllerBase
     {
-        private readonly UsuarioService _service;
+        private readonly IUsuarioService _service;
 
-        public UsuarioController(UsuarioService service)
+        public UsuarioController(IUsuarioService service)
         {
             _service = service;
         }
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUsuarioDto dto)

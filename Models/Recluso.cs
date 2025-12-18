@@ -20,9 +20,18 @@ namespace final.Models.Entities
         [Required]
         public int CondenaAnios { get; set; }
 
-        // Qué usuario registró al preso
+        // 1:N Usuario -> Reclusos
         public Guid UsuarioId { get; set; }
-
         public Usuario? Usuario { get; set; }
+
+        // 1:N Celda -> Reclusos
+        public Guid CeldaId { get; set; }
+        public Celda Celda { get; set; } = null!;
+
+        // 1:1 Recluso -> Expediente
+        public Expediente? Expediente { get; set; }
+
+        // N:M con Guardia
+        public ICollection<Guardia> Guardias { get; set; } = new List<Guardia>();
     }
 }

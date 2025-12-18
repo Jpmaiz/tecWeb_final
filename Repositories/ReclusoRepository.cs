@@ -15,12 +15,22 @@ namespace final.Repositories
 
         public async Task<List<Recluso>> GetAll()
         {
-            return await _context.Reclusos.ToListAsync();
+            return await _context.Reclusos
+                .Include(r => r.Celda)
+                .Include(r => r.Usuario)
+                .Include(r => r.Expediente)
+                .Include(r => r.Guardias)
+                .ToListAsync();
         }
 
         public async Task<Recluso?> GetById(Guid id)
         {
-            return await _context.Reclusos.FindAsync(id);
+            return await _context.Reclusos
+                .Include(r => r.Celda)
+                .Include(r => r.Usuario)
+                .Include(r => r.Expediente)
+                .Include(r => r.Guardias)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task Add(Recluso r)
