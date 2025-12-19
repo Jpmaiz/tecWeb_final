@@ -10,7 +10,7 @@ namespace final.Controllers
     {
         private readonly IUsuarioService _service;
 
-        public UsuarioController(IUsuarioService service)
+        public UsuarioController(IUsuarioService service)   
         {
             _service = service;
         }
