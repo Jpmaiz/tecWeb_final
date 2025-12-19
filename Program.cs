@@ -126,9 +126,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// =====================
-// PORT (Railway)
-// =====================
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 var port = Environment.GetEnvironmentVariable("PORT") ?? "3000";
 app.Urls.Clear();
 app.Urls.Add($"http://0.0.0.0:{port}");
