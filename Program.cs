@@ -45,9 +45,11 @@ if (!string.IsNullOrWhiteSpace(databaseUrl))
         Database = uri.LocalPath.TrimStart('/'),
         Username = userInfo[0],
         Password = userInfo.Length > 1 ? userInfo[1] : "",
-        SslMode = SslMode.Require,
-        TrustServerCertificate = true
+        SslMode = SslMode.Prefer,
+        TrustServerCertificate = true,
+        Pooling = false
     };
+
 
     connectionString = npgsqlBuilder.ToString();
 
