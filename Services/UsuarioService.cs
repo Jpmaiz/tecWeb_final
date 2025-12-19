@@ -60,26 +60,33 @@ namespace final.Services
 
         private string GenerarJwt(Usuario u)
         {
+            var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY")
+                         ?? throw new Exception("JWT_KEY no configurado");
+
+            var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+            var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+
             var claims = new List<Claim>
             {
                 new Claim("id", u.Id.ToString()),
                 new Claim("correo", u.Correo),
                 new Claim(ClaimTypes.Name, u.Nombre),
-                new Claim(ClaimTypes.Role, u.Rol) // 👈 AQUÍ VA EL ROL DEL USUARIO EN EL TOKEN
+                new Claim(ClaimTypes.Role, u.Rol)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
-                expires: DateTime.UtcNow.AddHours(4),
+                issuer: jwtIssuer,
+                audience: jwtAudience,
                 claims: claims,
+                expires: DateTime.UtcNow.AddHours(4),
                 signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
     }
 }

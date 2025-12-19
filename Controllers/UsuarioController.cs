@@ -21,16 +21,32 @@ namespace final.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var usuario = await _service.Registrar(dto);
-            return Ok(usuario);
+            try
+            {
+                var usuario = await _service.Registrar(dto);
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUsuarioDto dto)
         {
-            var token = await _service.Login(dto);
-            return Ok(new { token });
+            try
+            {
+                var token = await _service.Login(dto);
+                return Ok(new { token });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
         }
+
     }
 
 }
