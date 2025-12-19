@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "0f6056f8-02df-45b7-9342-3d4600fba52c",
-		"name": "Prison API - Completa (Corregida)",
+		"_postman_id": "c2f9c5e3-9d5e-4f5b-9a6b-1e8b4f8d1234",
+		"name": "Prison API - Final (Corregida)",
 		"description": "Sistema Penitenciario - Proyecto Final TecWeb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "🔐 Auth",
+			"name": "🔐 Auth (Usuario)",
 			"item": [
 				{
 					"name": "Register Admin",
@@ -23,11 +23,28 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\": \"Administrador\",\n  \"ci\": \"12345678\",\n  \"correo\": \"admin@test.com\",\n  \"password\": \"admin123\",\n  \"rol\": \"Admin\"\n}"
 						},
-						"url": "{{base_url}}/auth/register"
+						"url": "{{base_url}}/api/usuario/register"
 					}
 				},
 				{
-					"name": "Login Admin",
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Usuario Normal\",\n  \"ci\": \"87654321\",\n  \"correo\": \"user@test.com\",\n  \"password\": \"user123\",\n  \"rol\": \"User\"\n}"
+						},
+						"url": "{{base_url}}/api/usuario/register"
+					}
+				},
+				{
+					"name": "Login (Admin o User)",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -40,7 +57,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"correo\": \"admin@test.com\",\n  \"password\": \"admin123\"\n}"
 						},
-						"url": "{{base_url}}/auth/login"
+						"url": "{{base_url}}/api/usuario/login"
 					}
 				}
 			]
@@ -97,7 +114,7 @@
 								"value": "Bearer {{jwt_token}}"
 							}
 						],
-						"url": "{{base_url}}/api/v1/guardias"
+						"url": "{{base_url}}/api/guardia"
 					}
 				},
 				{
@@ -118,7 +135,7 @@
 							"mode": "raw",
 							"raw": "{\n  \"nombre\": \"Juan Pérez\",\n  \"ci\": \"1234567\",\n  \"turno\": \"Nocturno\",\n  \"rango\": \"Oficial\"\n}"
 						},
-						"url": "{{base_url}}/api/v1/guardias"
+						"url": "{{base_url}}/api/guardia"
 					}
 				}
 			]
@@ -155,7 +172,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\": \"Carlos López\",\n  \"ci\": \"7654321\",\n  \"fechaIngreso\": \"2024-01-01T00:00:00\",\n  \"condenaAnios\": 10,\n  \"usuarioId\": \"GUID_DE_USUARIO\"\n}"
+							"raw": "{\n  \"nombre\": \"Carlos López\",\n  \"ci\": \"7654321\",\n  \"fechaIngreso\": \"2024-01-01T00:00:00\",\n  \"condenaAnios\": 10,\n  \"usuarioId\": \"GUID_DEL_USUARIO\"\n}"
 						},
 						"url": "{{base_url}}/api/recluso"
 					}
@@ -194,7 +211,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"codigo\": \"EXP-001\",\n  \"delitoPrincipal\": \"Robo agravado\",\n  \"fechaRegistro\": \"2024-01-15T00:00:00\",\n  \"reclusoId\": \"GUID_DE_RECLUSO\"\n}"
+							"raw": "{\n  \"codigo\": \"EXP-001\",\n  \"delitoPrincipal\": \"Robo agravado\",\n  \"fechaRegistro\": \"2024-01-15T00:00:00\",\n  \"reclusoId\": \"GUID_DEL_RECLUSO\"\n}"
 						},
 						"url": "{{base_url}}/api/expediente"
 					}
