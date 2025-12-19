@@ -45,10 +45,12 @@ if (!string.IsNullOrWhiteSpace(databaseUrl))
         Database = uri.LocalPath.TrimStart('/'),
         Username = userInfo[0],
         Password = userInfo.Length > 1 ? userInfo[1] : "",
-        SslMode = SslMode.Prefer,
-        TrustServerCertificate = true,
+
+        // 🔥 CLAVE PARA FLY POSTGRES INTERNO
+        SslMode = SslMode.Disable,
         Pooling = false
     };
+
 
 
     connectionString = npgsqlBuilder.ToString();
