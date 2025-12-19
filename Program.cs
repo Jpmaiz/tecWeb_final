@@ -131,22 +131,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-/*
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    try
-    {
-        Console.WriteLine("Aplicando migraciones de base de datos...");
-        db.Database.Migrate();
-        Console.WriteLine("Migraciones aplicadas correctamente.");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error aplicando migraciones: {ex.Message}");
-    }
-}
-*/
+
 
 
 if (app.Environment.IsDevelopment())
